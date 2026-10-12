@@ -53,14 +53,26 @@ end
 cleria.events.on("tick", step)
 
 cleria.events.on("new_game", function()
-    layout, seed = nil, nil
+    layout, seed, died = nil, nil, false
     local s = next_seed ~= "" and next_seed or tostring(math.random(100000, 999999))
     pending = {data = data_for(CHARS[G.character()] or "hugo"), seed = s, attempt = 0}
 end)
+-- A continue after a death reloads the save's storage as it was at the last snapshot: in a game's first room that
+-- is before the layout was made. The layout of this session is then the one to keep.
+local died = false
+cleria.events.on("death", function() died = true end)
 cleria.events.on("load", function()
     pending = nil
-    seed, layout = cleria.save.get("seed"), cleria.save.get("layout")
-    if type(layout) ~= "table" then layout, seed = nil, nil end
+    local s, l = cleria.save.get("seed"), cleria.save.get("layout")
+    if type(l) == "table" then
+        seed, layout = s, l
+    elseif died and layout then
+        cleria.save.set("seed", seed)
+        cleria.save.set("layout", layout)
+    else
+        layout, seed = nil, nil
+    end
+    died = false
 end)
 
 -- ---- in the game: the chest's own script runs, the filter swaps the item ----------------------------------------

@@ -82,6 +82,10 @@ CASES = {
     "saved": dict(room="S_10/S_1001/S_1001", settings='Seed="keep-me"',
         drive="40:lua=solo;50:saveload;90:lua=solo;100:quit",
         expect=[LP + "seed keep-me: 42 chests shuffled for yunica", LP + "seed keep-me chests 42", LP + "seed keep-me chests 42"]),
+    # A death in the game's first room and a continue: the layout made after the room's snapshot is still there.
+    "death_first_room": dict(room="S_10/S_1009/S_1009", settings='Seed="keep-me"',
+        drive="40:lua=solo;60:hp=0;230:ok;290:ok;430:lua=solo;440:quit",
+        expect=[LP + "seed keep-me chests 42", "[death] HP 0", LP + "seed keep-me chests 42"]),
     # Without a seed in the settings a new game picks one.
     "random_seed": dict(room="S_10/S_1001/S_1001", char="3", drive="40:lua=solo;60:quit",
         expect=[" chests shuffled for toal", " chests 41"], absent=["seed nil"]),
