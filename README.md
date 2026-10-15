@@ -17,7 +17,7 @@ race the same layout.
 
 ## Install
 
-1. Download `4rtefakt.solorando-1.0.1.cleriamod` from the [releases](../../releases).
+1. Download `4rtefakt.solorando-1.0.2.cleriamod` from the [releases](../../releases).
 2. Double-click it (or use F1 > Mods > *Install a mod file...*).
 3. Turn **Solo Randomizer** on in F1 > Mods, restart CleriaCore, and start a **new game**.
 
